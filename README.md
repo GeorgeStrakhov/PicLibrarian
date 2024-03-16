@@ -14,8 +14,8 @@ _takes a library of images and makes them semantically searchable_
     - goes through every image in the folder and renames it to URL friendly
     - creates a subfolder with resized smaller images (because we don't want to overload replicate and for captioning it doesn't matter that much)
     - for every image in the resized subfolder: runs clip interrogator to create an image description
-    - passes the output of clip interrogator to GPT-4 to humanize it a bit
-    - builds an embedding of the GPT-4 output
+    - passes the output of clip interrogator to GPT-3.5 to humanize it a bit
+    - builds an embedding of the GPT-3.5 output
     - adds the filename, caption and embedding into a simple csv
     - once all images are captioned and embeddings built - csv is ready
     - the folder with resized smaller images is deleted (mom, you always told me to clean up after myself!)
