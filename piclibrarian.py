@@ -4,7 +4,8 @@ from pathlib import Path
 import csv
 from tqdm import tqdm
 from PIL import Image
-import urllib.parse
+import uuid
+import re
 
 from captioner import generate_caption
 from llm import humanize, generate_embedding
@@ -13,12 +14,15 @@ from llm import humanize, generate_embedding
 load_dotenv()
 
 def rename_image(file_path):
-    """
-    Renames the image to a URL-friendly name by escaping it.
-    """
+    file_path = Path(file_path)  # Ensure file_path is a Path object
     directory = file_path.parent
     name, ext = os.path.splitext(file_path.name)
-    new_name = f"{urllib.parse.quote_plus(name)}{ext}"
+    # Check if name contains only English letters and digits
+    if re.match(r'^[a-zA-Z0-9]+$', name):
+        new_name = name + ext
+    else:
+        # If not, use a UUID
+        new_name = str(uuid.uuid4()) + ext
     new_file_path = directory / new_name
     file_path.rename(new_file_path)
     return new_file_path
